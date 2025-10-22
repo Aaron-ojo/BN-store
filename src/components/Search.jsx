@@ -15,16 +15,12 @@ const Search = ({
         placeholder="search products"
         name="search"
         id="search"
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-        }}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
       <select
         value={selectedCategory}
         className="border ml-6 rounded-lg p-2"
-        onChange={(e) => {
-          setSelectedCategory(e.target.value);
-        }}
+        onChange={(e) => setSelectedCategory(e.target.value)}
       >
         <option value="all">All</option>
         <option value="electronics" className="text-gray-600">

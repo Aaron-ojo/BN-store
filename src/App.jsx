@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./components/NavBar";
+import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 import Footer from "./components/Footer";
 import Cart from "./components/Cart";
 import Search from "./components/Search";
 import ProductDetail from "./components/ProductDetail";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -89,45 +89,43 @@ function App() {
     .toFixed(2);
 
   return (
-    <Router>
-      <div>
-        <Navbar cartCount={cartCount} />
-        <Search
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          priceRange={priceRange}
-          setPriceRange={setPriceRange}
+    <>
+      <Navbar cartCount={cartCount} />
+      <Search
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        priceRange={priceRange}
+        setPriceRange={setPriceRange}
+      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <ProductList
+                products={filteredProducts}
+                isLoading={isLoading}
+                addToCart={addToCart}
+              />
+              <Cart
+                cart={cart}
+                removeFromCart={removeFromCart}
+                incrementQty={incrementQty}
+                decrementQty={decrementQty}
+                totalPrice={totalPrice}
+              />
+            </>
+          }
         />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <ProductList
-                  products={filteredProducts}
-                  isLoading={isLoading}
-                  addToCart={addToCart}
-                />
-                <Cart
-                  cart={cart}
-                  removeFromCart={removeFromCart}
-                  incrementQty={incrementQty}
-                  decrementQty={decrementQty}
-                  totalPrice={totalPrice}
-                />
-              </>
-            }
-          />
-          <Route
-            path="/products/:productId"
-            element={<ProductDetail addToCart={addToCart} />}
-          />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+        <Route
+          path="/products/:productId"
+          element={<ProductDetail addToCart={addToCart} />}
+        />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 
